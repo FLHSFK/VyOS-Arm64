@@ -4,7 +4,6 @@ system {
         user vyos {
             authentication {
                 encrypted-password "$6$rounds=656000$SJsG87tq0bbBWrqZ$BRzd3F6tTbAjGZrH.Pja3qxeABa2l47hSFUWAdqyaeZxMPo7vsrzlfmkngu9HklJMUdeBqrVxbeGfyZ0DFDg30"
-                // plaintext-password "vyos"
             }
         }
     }
@@ -32,11 +31,7 @@ system {
             address "fe80::/10"
             address "fc00::/7"
         }
-        server time.apple.com {
-        }
-        server time.cloudflare.com {
-        }
-        server time.google.com {
+        server ntp.ntsc.ac.cn {
         }
     }
     console {
@@ -46,10 +41,6 @@ system {
     }
     config-management {
         commit-revisions 100
-    }
-    update-check {
-        auto-check
-        url https://raw.githubusercontent.com/huihuimoe/vyos-arm64-build/refs/heads/master/version.json
     }
 }
 
