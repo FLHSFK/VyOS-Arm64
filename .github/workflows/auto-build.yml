@@ -256,7 +256,6 @@ jobs:
         with:
           name: ${{ steps.build_generic_iso.outputs.generic_image_name }}
           path: |
-            manifest.json
             ${{ steps.build_generic_iso.outputs.generic_image_iso }}
           retention-days: 15
           if-no-files-found: error
