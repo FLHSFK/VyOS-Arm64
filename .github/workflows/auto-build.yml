@@ -11,7 +11,7 @@ on:
         default: 'hello@xexex.vip'
       build_version:
         description: 'Version number (default: YYYY.MM.DD-TIMESTAMP-rolling)'
-        default: 'YYYY.MM.DD-TIMESTAMP-rolling'
+        default: ''
       builder_image:
         description: 'Builder image (default: ghcr.io/huihuimoe/vyos-arm64-build/vyos-builder:current-arm64, official: docker.io/vyos/vyos-build:current-arm64)'
         default: 'ghcr.io/huihuimoe/vyos-arm64-build/vyos-builder:current-arm64'
@@ -36,7 +36,6 @@ jobs:
       BUILD_BY: ${{ steps.set_env_variables.outputs.BUILD_BY }}
       build_version: ${{ steps.set_env_variables.outputs.build_version }}
       TIMESTAMP: ${{ steps.set_env_variables.outputs.TIMESTAMP }}
-      PREVIOUS_SUCCESS_BUILD_TIMESTAMP: ${{ steps.set_env_variables.outputs.PREVIOUS_SUCCESS_BUILD_TIMESTAMP }}
       generic_image_iso: ${{ steps.build_generic_iso.outputs.generic_image_iso }}
       generic_image_name: ${{ steps.build_generic_iso.outputs.generic_image_name }}
 
@@ -82,7 +81,6 @@ jobs:
             echo "build_version=${{ github.event.inputs.build_version }}" >> $GITHUB_OUTPUT
           fi
           echo "TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> $GITHUB_OUTPUT
-          echo "PREVIOUS_SUCCESS_BUILD_TIMESTAMP=$(cat version.json | jq -r '.[0].timestamp')" >> $GITHUB_OUTPUT
 
       - name: Checkout vyos-build repo
         uses: actions/checkout@v6
