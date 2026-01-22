@@ -249,8 +249,7 @@ jobs:
           GENERIC_IMAGE_ISO=$(jq --raw-output .artifacts[0] manifest.json)
           echo "generic_image_name=${GENERIC_IMAGE_NAME}" >> $GITHUB_OUTPUT
           echo "generic_image_iso=${GENERIC_IMAGE_ISO}" >> $GITHUB_OUTPUT
-          ls
-          tree
+          mv ${GENERIC_IMAGE_ISO} $GITHUB_WORKSPACE
 
       - uses: actions/upload-artifact@v6
         with:
@@ -260,25 +259,3 @@ jobs:
           retention-days: 15
           if-no-files-found: error
           compression-level: 0
-
-  publish:
-    needs:
-      - build_generic_iso
-    runs-on: ubuntu-24.04
-    permissions:
-      contents: write
-    if: github.ref_name == 'master'
-    steps:
-      - uses: actions/checkout@v6
-      - name: Clone vyos-build repo
-        uses: actions/checkout@v6
-        with:
-          repository: vyos/vyos-build
-          path: vyos-build
-          fetch-depth: 0
-      - name: Clone vyos-1x source code
-        uses: actions/checkout@v6
-        with:
-          repository: vyos/vyos-1x
-          path: vyos-1x
-          fetch-depth: 0
